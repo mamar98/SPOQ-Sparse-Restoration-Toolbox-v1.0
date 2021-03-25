@@ -8,5 +8,3 @@ def condlplq(x,alpha,beta,eta,p,q,ro):
     Xpq = (q-1)/((eta ** q + ro**q) ** (2/q))
     A = Xpq+(1/(lp**p+beta **p))*(x**2+ alpha**2) ** (p/2-1)
     return A
-
-print(condlplq(1,1,1,1,1,1,1))
