@@ -1,4 +1,5 @@
 import numpy as np 
+from time import time
 
 from pds import pds
 from Fcost import Fcost
@@ -14,13 +15,14 @@ def FB_PPXALpLq(K, y, p, q, metric, alpha, beta, eta, xi, nbiter, xtrue):
     # Initialization
     N = K.shape[1]
 
-    Bwhile = np.zeros(nbiter,1)
-    fcost = np.zeros(nbiter+1,1)
-    mysnr = np.zeros(nbiter+1,1)
+    Bwhile = []
+    Time  = []
+    fcost = []
+    mysnr = []
 
     xk_old, _ = pds(K,y,xi,10)
-    mysnr[0] = -10 * np.log10( np.sum((xk_old-xtrue)**2) / np.sum(xtrue**2))
-    fcost[0] = Fcost(xk_old, alpha, beta, eta, p, q)
+    mysnr.append( -10 * np.log10( np.sum((xk_old-xtrue)**2) / np.sum(xtrue**2)) )
+    fcost.append( Fcost(xk_old, alpha, beta, eta, p, q) )
 
     gamma = 1
     prec = 1e-12
@@ -35,7 +37,7 @@ def FB_PPXALpLq(K, y, p, q, metric, alpha, beta, eta, xi, nbiter, xtrue):
         if (k%100==0):
             print('it={} : fcost {}'.format( k, fcost[k] ))
         
-        # début chrono
+        start = time()
 
         # metric 0: Lip constant, 1: FBVM without TR, 2: FBVM-TR
         if metric == 0:      
@@ -64,20 +66,18 @@ def FB_PPXALpLq(K, y, p, q, metric, alpha, beta, eta, xi, nbiter, xtrue):
                         bwhile = bwhile + 1
                     else:
                         break
+                      
+                Bwhile.append(bwhile)
             
-            
-                Bwhile[k]= bwhile
-            
-        
-        # fin chrono
+        Time.append(time() - start)
         
         error = np.linalg.norm(xk-xk_old)**2 / np.linalg.norm(xk_old)**2
-        mysnr[k+1] = -10*np.log10(np.sum((xk-xtrue)**2) / np.sum(xtrue**2))
-        fcost[k+1] = Fcost(xk,alpha,beta,eta,p,q)
+        mysnr.append( -10*np.log10(np.sum((xk-xtrue)**2) / np.sum(xtrue**2)) )
+        fcost.append( Fcost(xk,alpha,beta,eta,p,q) )
 
         if error < prec:
             break
         
         xk_old = xk
 
-    return xk, fcost, Bwhile, Time, mysnr
+    return xk, np.array(fcost), Bwhile, Time, np.array(mysnr)

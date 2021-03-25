@@ -1,7 +1,7 @@
 ###########################################################################
 ## SPOQ: Smooth lp-Over-lq ratio
 ### This code implements the SPOQ regularization function presented in
-### "SPOQ $\ell_p$-Over-$\ell_q$ Regularization for Sparse Signal: Recovery 
+### "SPOQ Lp-Over-Lq Regularization for Sparse Signal: Recovery 
 ### applied to Mass Spectrometry"
 ### IEEE Transactions on Signal Processing, 2020, Volume 68, pages 6070--6084
 ### Afef Cherni, IEEE member, 
