@@ -1,4 +1,4 @@
-from Lpsmooth import Lpsmooth 
+from Tools.Lpsmooth import Lpsmooth
 
 def condlplq(x,alpha,beta,eta,p,q,ro):
     """

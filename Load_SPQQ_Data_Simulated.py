@@ -38,26 +38,22 @@ nPeak = 20
 peakWidth = 5
 
 xtrue = np.zeros((nSample,1))
-xtrueLocation=np.random.permutation(nSample)[:nPeak] #row vector containing nPeak unique integers selected randomly from 1 to nSample
-xtrueAmplitude = np.random.rand(nPeak, 1) # vector of nPeak lenght with values beetween 0 and 1 
+xtrueLocation=np.random.permutation(nSample)[:nPeak].copy() #row vector containing nPeak unique integers selected randomly from 1 to nSample
+xtrueAmplitude = np.random.rand(nPeak, 1) # vector of nPeak lenght with values beetween 0 and 1
 xtrue[xtrueLocation] = xtrueAmplitude
 
 peakMatrix = pascal(peakWidth)
 peakShape = np.diag(np.fliplr(peakMatrix))
-peakShape = np.array(peakShape/np.sum(peakShape))
+peakShape = peakShape/np.sum(peakShape)
 peakShapeFilled = np.concatenate((peakShape, np.zeros(nSample - peakWidth)))
 peakShapeFilledtranspose = np.transpose(peakShapeFilled)
 
-"""matlab
-K = toeplitz([peakShapeFilled(1) fliplr(peakShapeFilled(2:end))], peakShapeFilled);
-"""
-#K = toeplitz(
-
+K = np.transpose(toeplitz(peakShapeFilled, np.zeros(nSample)))
 y = K*xtrue
 
 # ADD the gaussian noise with a standard deviation sigma
-noise = np.array([uniform(0, 1) for i in range(nSample)])
-sigma = 0.5 *np.max(y)/100
+noise = np.random.randn(nSample, 1)
+sigma = 0.5 * np.max(y)/100
 y = y + sigma*noise
 
 # CHOOSE SPOQ PARAMETERS
@@ -70,7 +66,7 @@ q = 2
 nbiter=5000
 
 # Verifiy/dispaly data information
-Present_SPOQ_Data_Information(xtrue,K,y,noise)
+Present_SPOQ_Data_Information(xtrue, K, y, nSample, noise)
 
 #Run SPOQ Recovery
 Run_SPOQ_Recovery(K,y,p,q,alpha,beta,eta,xi,nbiter,xtrue)

@@ -1,12 +1,12 @@
 import numpy as np 
 from time import time
 
-from pds import pds
-from Fcost import Fcost
-from condlplq import condlplq
-from gradlplq import gradlplq
-from ComputeLipschitz import ComputeLipschitz
-from proxPPXAplus import proxPPXAplus
+from Tools.pds import pds
+from Tools.Fcost import Fcost
+from Tools.condlplq import condlplq
+from Tools.gradlplq import gradlplq
+from Tools.ComputeLipschitz import ComputeLipschitz
+from Tools.proxPPXAplus import proxPPXAplus
 
 def FB_PPXALpLq(K, y, p, q, metric, alpha, beta, eta, xi, nbiter, xtrue):
     # This function defines the Trust region algorihtm based on
