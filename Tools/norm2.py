@@ -1,5 +1,4 @@
 import numpy as np
-from random import random
 
 def norm2(K,N):
     nbiter = 50

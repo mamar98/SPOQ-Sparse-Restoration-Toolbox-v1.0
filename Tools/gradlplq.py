@@ -1,5 +1,5 @@
-from Lpsmooth import Lpsmooth 
-from Lqsmooth import Lqsmooth 
+from Tools.Lpsmooth import Lpsmooth
+from Tools.Lqsmooth import Lqsmooth
 
 def gradlplq(x,alpha,beta,mu,p,q):
     """

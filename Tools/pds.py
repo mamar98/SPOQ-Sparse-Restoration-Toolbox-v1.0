@@ -1,8 +1,8 @@
 import numpy as np
 
-from norm2 import norm2
-from proxl1 import proxl1
-from proxl2 import proxl2
+from Tools.norm2 import norm2
+from Tools.proxl1 import proxl1
+from Tools.proxl2 import proxl2
 
 def pds(K,y,eta,nbiter):
 

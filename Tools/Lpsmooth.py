@@ -1,4 +1,3 @@
-
 import numpy as np
 
 def Lpsmooth(x,alpha,p):

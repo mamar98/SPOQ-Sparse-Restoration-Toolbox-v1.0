@@ -1,7 +1,7 @@
 import numpy as np 
 
-from proxB import proxB
-from proxl2 import proxl2
+from Tools.proxB import proxB
+from Tools.proxl2 import proxl2
 
 def proxPPXAplus(D,B,x,y,eta,J,prec):
     # This function computes the proximity operator 
