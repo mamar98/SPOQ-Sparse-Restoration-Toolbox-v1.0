@@ -1,0 +1,3 @@
+def lpnorm(X,Y,p):
+    lp = (abs(X)**p+abs(Y)**p)
+    return lp
