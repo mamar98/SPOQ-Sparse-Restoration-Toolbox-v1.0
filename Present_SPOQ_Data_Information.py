@@ -35,6 +35,6 @@ def Present_SPOQ_Data_Information(xtrue,K,y,N,noise):
     plt.plot(sample,y,'-r')
     plt.title('Observation y')
     plt.xlabel('Sample')
-    plt.ylim([-0.05*np.max(y),1.1*max(y)])
+    plt.ylim(-0.05*np.max(y),1.1*np.max(y))
     plt.grid(True)
     plt.show()
