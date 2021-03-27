@@ -47,26 +47,26 @@ def FB_PPXALpLq(K, y, p, q, metric, alpha, beta, eta, xi, nbiter, xtrue):
             xk = proxPPXAplus(K, B, xxk, y, xi, J, prec)
         
         elif metric == 1: 
-            A = condlplq(xk_old, alpha, beta, eta, p, q, 0);               
+            A = condlplq(xk_old, alpha, beta, eta, p, q, 0)
             B = A/gamma
             xxk = xk_old - (1/B) * gradlplq(xk_old, alpha, beta, eta, p, q)
             xk = proxPPXAplus(K, B, xxk, y, xi, J, prec)
         
         elif metric ==2:     
-                ro = np.sum( np.abs(xk_old**q) )**(1/q); 
+                ro = np.sum( np.abs(xk_old**q) )**(1/q)
                 bwhile = 0
                 while 1 :
                     A = condlplq(xk_old, alpha, beta, eta, p, q, ro)
                     B = A/gamma
-                    xxk = xk_old - (1/B) * gradlplq(xk_old, alpha, beta, eta, p, q);                                       
-                    xk = proxPPXAplus(K, B, xxk, y, xi, J, prec)
+                    xxk = xk_old - (1/B) * gradlplq(xk_old, alpha, beta, eta, p, q)
+                    xk = proxPPXAplus(K, B, xxk, y, xi, J, prec)[0]
 
                     if np.sum( np.abs(xk)**q )**(1/q) < ro: 
                         ro = ro/2
                         bwhile = bwhile + 1
                     else:
                         break
-                      
+
                 Bwhile.append(bwhile)
             
         Time.append(time() - start)
