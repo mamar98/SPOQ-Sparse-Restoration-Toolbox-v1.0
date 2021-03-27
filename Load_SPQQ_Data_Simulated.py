@@ -2,10 +2,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% SPOQ: Smooth lp-Over-lq ratio
 %%% This code implements the SPOQ regularization function presented in
-%%% "SPOQ $\ell_p$-Over-$\ell_q$ Regularization for Sparse Signal: Recovery 
+%%% "SPOQ $\ell_p$-Over-$\ell_q$ Regularization for Sparse Signal: Recovery
 %%% applied to Mass Spectrometry"
 %%% IEEE Transactions on Signal Processing, 2020, Volume 68, pages 6070--6084
-%%% Afef Cherni, IEEE member, 
+%%% Afef Cherni, IEEE member,
 %%% Emilie Chouzenoux, IEEE Member,
 %%% Laurent Duval, IEEE Member,
 %%% Jean-Christophe Pesquet, IEEE Fellow
@@ -34,7 +34,7 @@ sys.path.append("./Tools/")
 print('_____________________________________________________')
 print('...loading data ...')
 nSample = 500
-nPeak = 20 
+nPeak = 20
 peakWidth = 5
 
 xtrue = np.zeros((nSample,1))
@@ -49,7 +49,7 @@ peakShapeFilled = np.concatenate((peakShape, np.zeros(nSample - peakWidth)))
 peakShapeFilledtranspose = np.transpose(peakShapeFilled)
 
 K = np.transpose(toeplitz(peakShapeFilled, np.zeros(nSample)))
-y = K*xtrue
+y = K @ xtrue
 
 # ADD the gaussian noise with a standard deviation sigma
 noise = np.random.randn(nSample, 1)
