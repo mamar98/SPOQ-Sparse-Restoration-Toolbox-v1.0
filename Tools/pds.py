@@ -12,8 +12,8 @@ def pds(K,y,eta,nbiter):
     # sigma = 0.9/(tau*(normK**2))   c'était écrit comme ça dans la version Matlab
     sigma = 0.9/normK
     ro = 1
-    refspec = np.zeros(nbiter,1)
-    xk_old = np.ones(N,1)
+    refspec = np.zeros((nbiter,1))
+    xk_old = np.ones((N,1))
     uk_old = np.matmul(K,xk_old)
     prec = 1e-6
 
