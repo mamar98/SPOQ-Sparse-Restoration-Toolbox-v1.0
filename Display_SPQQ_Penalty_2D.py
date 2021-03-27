@@ -41,22 +41,22 @@ def Display_SPOQ_Penalty_2D():
     ###################################################################################################
     #######                              Figure                                                 ####### 
     ###################################################################################################
-    fig = plt.figure(figsize=plt.figaspect(0.3)) # set up a figure twice as wide as it is tall
+    fig = plt.figure(figsize=plt.figaspect(0.5)) # set up a figure twice as wide as it is tall
     #===============
     #  First subplot
     #===============
     # set up the axes for the first plot
     ax1 = fig.add_subplot(1, 2, 1, projection='3d')
-    surf = ax1.plot_surface(X,Y,Zl0, rstride=1, cstride=1, cmap=cm.coolwarm, linewidth=0, antialiased=False)
-    fig.colorbar(surf, shrink=0.5, aspect=10)
+    surf = ax1.plot_surface(X,Y,Zl0, cmap=cm.coolwarm)
+    fig.colorbar(surf)
     ax1.set_title('$\ell_0$ count measure')
     #===============
     # Second subplot
     #===============
     # set up the axes for the second plot
     ax2 = fig.add_subplot(1, 2, 2, projection='3d')
-    surf2= ax2.plot_surface(X,Y,Zlplq, rstride=1, cstride=1, cmap=cm.coolwarm, linewidth=0, antialiased=False)
-    fig.colorbar(surf2, shrink=0.5, aspect=10)
+    surf2= ax2.plot_surface(X,Y,Zlplq, cmap=cm.coolwarm)
+    fig.colorbar(surf2)
     ax2.set_title('Smoothed $\ell_{3/4}$-over-$\ell_2$ quasinorm ratio')
     
     plt.show()
