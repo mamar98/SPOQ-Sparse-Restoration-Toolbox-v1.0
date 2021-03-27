@@ -1,3 +1,4 @@
+import numpy as np
 from Tools.Lpsmooth import Lpsmooth
 from Tools.Lqsmooth import Lqsmooth
 
