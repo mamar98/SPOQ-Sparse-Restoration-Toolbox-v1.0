@@ -2,8 +2,9 @@ import numpy as np
 
 from Tools.proxB import proxB
 from Tools.proxl2 import proxl2
+from numba import njit
 
-
+@njit(cache=True)
 def proxPPXAplus(D, B, x, y, eta, J, prec):
     # This function computes the proximity operator 
     # using the PPXA+ algorithm
@@ -31,7 +32,7 @@ def proxPPXAplus(D, B, x, y, eta, J, prec):
         error = np.linalg.norm(zk - zk_old) ** 2
 
         if error < prec:
-            print('PPXA stops at j = {}'.format(j))
+            print('PPXA stops at j = ', j)
             break
 
         x1k_old = x1k

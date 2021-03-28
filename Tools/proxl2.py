@@ -1,5 +1,7 @@
 import numpy as np
+from numba import njit
 
+@njit(cache=True)
 def proxl2(x,y,eta):
     """
     projection onto the l2 ball
