@@ -34,4 +34,4 @@ nbiter = 5000
 
 Present_SPOQ_Data_Information(xtrue,K,y,N,noise) #Run la fonction en question
 
-#Run_SPOQ_Recovery()
+Run_SPOQ_Recovery(K,y,p,q,alpha,beta,eta,xi,nbiter,xtrue)
