@@ -3,7 +3,9 @@ import numpy as np
 from Tools.norm2 import norm2
 from Tools.proxl1 import proxl1
 from Tools.proxl2 import proxl2
+from numba import njit
 
+@njit(cache=True)
 def pds(K,y,eta,nbiter):
 
     M, N = K.shape[0], K.shape[1]
@@ -14,13 +16,13 @@ def pds(K,y,eta,nbiter):
     ro = 1
     refspec = np.zeros((nbiter,1))
     xk_old = np.ones((N,1))
-    uk_old = np.matmul(K,xk_old)
+    uk_old = K @ xk_old
     prec = 1e-6
 
     for i in range(nbiter):
-        xxk = proxl1(xk_old - tau * np.matmul(K.T, uk_old), tau)
+        xxk = proxl1(xk_old - tau * K.T @ uk_old, tau)
 
-        zk = uk_old + sigma * np.matmul(K, 2*xxk - xk_old)
+        zk = uk_old + sigma * K @ (2*xxk - xk_old)
         
         uuk = zk - sigma * proxl2(zk/sigma, y, eta)
         

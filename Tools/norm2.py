@@ -1,5 +1,7 @@
 import numpy as np
+from numba import njit
 
+@njit(cache=True)
 def norm2(K,N):
     nbiter = 50
     b = np.random.rand(N,1)

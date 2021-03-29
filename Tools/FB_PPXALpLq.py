@@ -7,7 +7,9 @@ from Tools.condlplq import condlplq
 from Tools.gradlplq import gradlplq
 from Tools.ComputeLipschitz import ComputeLipschitz
 from Tools.proxPPXAplus import proxPPXAplus
+from numba import njit, objmode
 
+@njit(cache=True)
 def FB_PPXALpLq(K, y, p, q, metric, alpha, beta, eta, xi, nbiter, xtrue):
     # This function defines the Trust region algorihtm based on
     # Forward-Backward algorithm
@@ -20,7 +22,7 @@ def FB_PPXALpLq(K, y, p, q, metric, alpha, beta, eta, xi, nbiter, xtrue):
     fcost = []
     mysnr = []
 
-    xk_old, _ = pds(K,y,xi,10)
+    xk_old = pds(K,y,xi,10)[0]
     mysnr.append( -10 * np.log10( np.sum((xk_old-xtrue)**2) / np.sum(xtrue**2)) )
     fcost.append( Fcost(xk_old, alpha, beta, eta, p, q) )
 
@@ -34,23 +36,24 @@ def FB_PPXALpLq(K, y, p, q, metric, alpha, beta, eta, xi, nbiter, xtrue):
     # Algorithm   
     for k in range(nbiter):
 
-        if (k%100==0):
-            print('it={} : fcost {}'.format( k, fcost[k] ))
-        
-        start = time()
+        if k%100==0:
+            print('it=', k, ' : fcost ', fcost[k])
+
+        with objmode(start = 'float64'):
+            start = time()
 
         # metric 0: Lip constant, 1: FBVM without TR, 2: FBVM-TR
-        if metric == 0:      
-            A = np.matmul(L,np.ones(N,1))
+        if metric == 0:
+            A = L * np.ones((N,1))
             B = A/gamma
             xxk = xk_old - (1/B) * gradlplq(xk_old, alpha, beta, eta, p, q)
-            xk = proxPPXAplus(K, B, xxk, y, xi, J, prec)
+            xk = proxPPXAplus(K, B, xxk, y, xi, J, prec)[0]
         
         elif metric == 1: 
             A = condlplq(xk_old, alpha, beta, eta, p, q, 0)
             B = A/gamma
             xxk = xk_old - (1/B) * gradlplq(xk_old, alpha, beta, eta, p, q)
-            xk = proxPPXAplus(K, B, xxk, y, xi, J, prec)
+            xk = proxPPXAplus(K, B, xxk, y, xi, J, prec)[0]
         
         elif metric ==2:     
                 ro = np.sum( np.abs(xk_old**q) )**(1/q)
@@ -68,8 +71,11 @@ def FB_PPXALpLq(K, y, p, q, metric, alpha, beta, eta, xi, nbiter, xtrue):
                         break
 
                 Bwhile.append(bwhile)
-            
-        Time.append(time() - start)
+
+        with objmode(finish = 'float64'):
+            finish = time()
+
+        Time.append(finish - start)
         
         error = np.linalg.norm(xk-xk_old)**2 / np.linalg.norm(xk_old)**2
         mysnr.append( -10*np.log10(np.sum((xk-xtrue)**2) / np.sum(xtrue**2)) )

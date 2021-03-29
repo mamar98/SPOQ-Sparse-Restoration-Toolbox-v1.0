@@ -1,5 +1,7 @@
 from Tools.Lpsmooth import Lpsmooth
+from numba import njit
 
+@njit(cache=True)
 def condlplq(x,alpha,beta,eta,p,q,ro):
     """
     This function computes the metric matrix for the variable metric Forward-Backward algorithm

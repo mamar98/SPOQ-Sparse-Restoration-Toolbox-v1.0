@@ -1,5 +1,7 @@
 import numpy as np
+from numba import njit
 
+@njit(cache=True)
 def lplqnorm(x,alpha,beta,eta,p,q):
     smallnb = 1/(2**32)
     normx = np.zeros(x.shape)

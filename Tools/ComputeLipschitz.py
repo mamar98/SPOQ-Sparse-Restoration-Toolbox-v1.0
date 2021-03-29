@@ -1,3 +1,6 @@
+from numba import njit
+
+@njit(cache=True)
 def ComputeLipschitz(alpha,beta,eta,p,q,N):
     L1 = p*alpha**(p-2) / beta**p
     L2 = p/(2*alpha**2) * max(1,(N*alpha**p/beta**p)**2)
